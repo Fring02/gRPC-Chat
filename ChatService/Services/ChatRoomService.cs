@@ -14,29 +14,37 @@ namespace ChatService
     {
         private readonly MessagesRepository _messages;
         private ILogger<ChatRoomService> _logger;
-        private static readonly ConcurrentDictionary<string, IServerStreamWriter<Message>> users =
-            new ConcurrentDictionary<string, IServerStreamWriter<Message>>();
+        private static readonly ConcurrentBag<ChatRoom> chatRooms = new ConcurrentBag<ChatRoom>();
         public ChatRoomService(MessagesRepository messages, ILogger<ChatRoomService> logger)
         {
             _messages = messages;
             _logger = logger;
         }
-        public async Task Join(string userName, ChatRoom chatRoom, IServerStreamWriter<Message> response)
+        public async Task Join(string userName, ChatRoomInfo chatRoom, IServerStreamWriter<Message> response)
         {
-            if (users.TryAdd(userName, response))
+            if(!chatRooms.Any(c => c.Id.Equals(chatRoom.Id)))
+            chatRooms.Add(new ChatRoom(chatRoom.Id));
+            var room = chatRooms.First(c => c.Id.Equals(chatRoom.Id));
+
+            if (room.AddUser(userName, response))
             {
                 var chatRoomId = Guid.Parse(chatRoom.Id);
                 if (!await _messages.HasUser(chatRoomId, userName))
                 {
                     _logger.LogInformation($"Creating entering message for user {userName} on chat room {chatRoom.Name}");
-                    await response.WriteAsync(new Message { Text = " has entered the chat!", User = userName, ChatRoomId = chatRoom.Id });
+                    await room.SendEnteringMessage(response,
+                        new Message { Text = " has entered the chat!", User = userName, ChatRoomId = chatRoom.Id });
                 }
                 else _messages.HistoryMessages(Guid.Parse(chatRoom.Id)).Result.ForEach(m => response.WriteAsync(m));
             }
         }
 
 
-        public void Remove(string name) => users.TryRemove(name, out _);
+        public void Remove(Guid chatRoomId, string name)
+        {
+            var room = chatRooms.First(c => c.Id.Equals(chatRoomId));
+            room.DeleteUser(name);
+        }
 
         public async Task BroadcastMessageAsync(Message message) => await BroadcastMessage(message);
 
@@ -44,22 +52,20 @@ namespace ChatService
         {
             var messageModel = new MessageModel { User = message.User, Text = message.Text,
                 ChatRoomId = Guid.Parse(message.ChatRoomId) };
+                var room = chatRooms.First(c => c.Id.Equals(message.ChatRoomId));
             if(await _messages.AddMessage(messageModel))
             {
-                foreach (var user in users.Where(x => x.Key != message.User))
-                {
-                  await SendMessageToSubscriber(user, message);
-                }
+                await room.SendMessage(message);
             }
             else
             {
                 message.Text = "Failed to add message";
                 _logger.LogError(message.Text);
-                await SendMessageToSubscriber(users.FirstOrDefault(u => u.Key == message.User), message);
+                await room.ErrorMessage(message);
             } 
         }
 
-        private async Task<KeyValuePair<string, IServerStreamWriter<Message>>?> SendMessageToSubscriber(
+       /* private async Task<KeyValuePair<string, IServerStreamWriter<Message>>?> SendMessageToSubscriber(
             KeyValuePair<string, IServerStreamWriter<Message>> pair, Message message)
         {
             try
@@ -72,7 +78,7 @@ namespace ChatService
                 _logger.LogError(ex.Message);
                 return pair;
             }
-        }
+        }*/
     }
 
 }

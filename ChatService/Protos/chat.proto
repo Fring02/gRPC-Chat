@@ -13,7 +13,7 @@ message Message {
 	string text = 2;
 	string chatRoomId = 4;
 }
-message ChatRoom{
+message ChatRoomInfo{
 	string id = 2;
 	string Name = 1;
 }
@@ -22,6 +22,6 @@ message ChatRoomJoin{
 	string user = 2;
 }
 message ChatRooms{
-	repeated ChatRoom chatRooms = 1;
+	repeated ChatRoomInfo chatRooms = 1;
 }
 message Lookup{}

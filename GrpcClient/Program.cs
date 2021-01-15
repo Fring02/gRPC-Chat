@@ -27,7 +27,6 @@ namespace GrpcClient
                     while (await chat.ResponseStream.MoveNext())
                     {
                         var response = chat.ResponseStream.Current;
-                        if(response.ChatRoomId.Equals(preferredChatRoom))
                         Console.WriteLine($"{response.User} : {response.Text}");
                     }
                 });

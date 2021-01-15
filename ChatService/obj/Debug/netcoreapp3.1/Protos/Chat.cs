@@ -26,18 +26,19 @@ namespace ChatService {
           string.Concat(
             "ChFQcm90b3MvY2hhdC5wcm90byJFCgdNZXNzYWdlEgoKAmlkGAMgASgJEgwK",
             "BHVzZXIYASABKAkSDAoEdGV4dBgCIAEoCRISCgpjaGF0Um9vbUlkGAQgASgJ",
-            "IiQKCENoYXRSb29tEgoKAmlkGAIgASgJEgwKBE5hbWUYASABKAkiMAoMQ2hh",
-            "dFJvb21Kb2luEhIKCmNoYXRSb29tSWQYASABKAkSDAoEdXNlchgCIAEoCSIp",
-            "CglDaGF0Um9vbXMSHAoJY2hhdFJvb21zGAEgAygLMgkuQ2hhdFJvb20iCAoG",
-            "TG9va3VwMowBCgtDaGF0U2VydmljZRIjCgxHZXRDaGF0Um9vbXMSBy5Mb29r",
-            "dXAaCi5DaGF0Um9vbXMSLQoTSm9pbkFuZFdyaXRlTWVzc2FnZRIILk1lc3Nh",
-            "Z2UaCC5NZXNzYWdlKAEwARIpChJTaG93TWVzc2FnZUhpc3RvcnkSBy5Mb29r",
-            "dXAaCC5NZXNzYWdlMAFCDqoCC0NoYXRTZXJ2aWNlYgZwcm90bzM="));
+            "IigKDENoYXRSb29tSW5mbxIKCgJpZBgCIAEoCRIMCgROYW1lGAEgASgJIjAK",
+            "DENoYXRSb29tSm9pbhISCgpjaGF0Um9vbUlkGAEgASgJEgwKBHVzZXIYAiAB",
+            "KAkiLQoJQ2hhdFJvb21zEiAKCWNoYXRSb29tcxgBIAMoCzINLkNoYXRSb29t",
+            "SW5mbyIICgZMb29rdXAyjAEKC0NoYXRTZXJ2aWNlEiMKDEdldENoYXRSb29t",
+            "cxIHLkxvb2t1cBoKLkNoYXRSb29tcxItChNKb2luQW5kV3JpdGVNZXNzYWdl",
+            "EgguTWVzc2FnZRoILk1lc3NhZ2UoATABEikKElNob3dNZXNzYWdlSGlzdG9y",
+            "eRIHLkxvb2t1cBoILk1lc3NhZ2UwAUIOqgILQ2hhdFNlcnZpY2ViBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.Message), global::ChatService.Message.Parser, new[]{ "Id", "User", "Text", "ChatRoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.ChatRoom), global::ChatService.ChatRoom.Parser, new[]{ "Id", "Name" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.ChatRoomInfo), global::ChatService.ChatRoomInfo.Parser, new[]{ "Id", "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.ChatRoomJoin), global::ChatService.ChatRoomJoin.Parser, new[]{ "ChatRoomId", "User" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.ChatRooms), global::ChatService.ChatRooms.Parser, new[]{ "ChatRooms_" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ChatService.Lookup), global::ChatService.Lookup.Parser, null, null, null, null, null)
@@ -327,15 +328,15 @@ namespace ChatService {
 
   }
 
-  public sealed partial class ChatRoom : pb::IMessage<ChatRoom>
+  public sealed partial class ChatRoomInfo : pb::IMessage<ChatRoomInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<ChatRoom> _parser = new pb::MessageParser<ChatRoom>(() => new ChatRoom());
+    private static readonly pb::MessageParser<ChatRoomInfo> _parser = new pb::MessageParser<ChatRoomInfo>(() => new ChatRoomInfo());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ChatRoom> Parser { get { return _parser; } }
+    public static pb::MessageParser<ChatRoomInfo> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -348,22 +349,22 @@ namespace ChatService {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ChatRoom() {
+    public ChatRoomInfo() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ChatRoom(ChatRoom other) : this() {
+    public ChatRoomInfo(ChatRoomInfo other) : this() {
       id_ = other.id_;
       name_ = other.name_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ChatRoom Clone() {
-      return new ChatRoom(this);
+    public ChatRoomInfo Clone() {
+      return new ChatRoomInfo(this);
     }
 
     /// <summary>Field number for the "id" field.</summary>
@@ -390,11 +391,11 @@ namespace ChatService {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ChatRoom);
+      return Equals(other as ChatRoomInfo);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ChatRoom other) {
+    public bool Equals(ChatRoomInfo other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -474,7 +475,7 @@ namespace ChatService {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ChatRoom other) {
+    public void MergeFrom(ChatRoomInfo other) {
       if (other == null) {
         return;
       }
@@ -783,11 +784,11 @@ namespace ChatService {
 
     /// <summary>Field number for the "chatRooms" field.</summary>
     public const int ChatRooms_FieldNumber = 1;
-    private static readonly pb::FieldCodec<global::ChatService.ChatRoom> _repeated_chatRooms_codec
-        = pb::FieldCodec.ForMessage(10, global::ChatService.ChatRoom.Parser);
-    private readonly pbc::RepeatedField<global::ChatService.ChatRoom> chatRooms_ = new pbc::RepeatedField<global::ChatService.ChatRoom>();
+    private static readonly pb::FieldCodec<global::ChatService.ChatRoomInfo> _repeated_chatRooms_codec
+        = pb::FieldCodec.ForMessage(10, global::ChatService.ChatRoomInfo.Parser);
+    private readonly pbc::RepeatedField<global::ChatService.ChatRoomInfo> chatRooms_ = new pbc::RepeatedField<global::ChatService.ChatRoomInfo>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::ChatService.ChatRoom> ChatRooms_ {
+    public pbc::RepeatedField<global::ChatService.ChatRoomInfo> ChatRooms_ {
       get { return chatRooms_; }
     }
 

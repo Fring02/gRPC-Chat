@@ -16,15 +16,15 @@ namespace ChatService.Repositories
             _context = context;
         }
 
-        public async Task<List<ChatRoom>> GetAll()
+        public async Task<List<ChatRoomInfo>> GetAll()
         {
-            return await _context.ChatRooms.Select(c => new ChatRoom { Id = c.Id.ToString(), Name = c.Name }).ToListAsync();
+            return await _context.ChatRooms.Select(c => new ChatRoomInfo { Id = c.Id.ToString(), Name = c.Name }).ToListAsync();
         }
 
-        public async Task<ChatRoom> GetById(Guid id)
+        public async Task<ChatRoomInfo> GetById(Guid id)
         {
             var chatRoom = await _context.ChatRooms.FindAsync(id);
-            return new ChatRoom { Id = chatRoom.Id.ToString(), Name = chatRoom.Name };
+            return new ChatRoomInfo { Id = chatRoom.Id.ToString(), Name = chatRoom.Name };
         }
     }
 }

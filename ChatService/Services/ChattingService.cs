@@ -19,20 +19,23 @@ namespace ChatService.Services
         public override async Task JoinAndWriteMessage(IAsyncStreamReader<Message> requestStream, IServerStreamWriter<Message> responseStream, ServerCallContext context)
         {
             if (!await requestStream.MoveNext()) return;
+            var chatJoin = new ChatRoomJoin();
             do
             {
-                var chatJoin = new ChatRoomJoin
+                /*var chatJoin = new ChatRoomJoin
                 {
                     User = requestStream.Current.User,
                     ChatRoomId = requestStream.Current.ChatRoomId
-                };
+                };*/
+                chatJoin.User = requestStream.Current.User;
+                chatJoin.ChatRoomId = requestStream.Current.ChatRoomId;
                 await JoinChatRoom(chatJoin, responseStream);
 
                 if(!string.IsNullOrEmpty(requestStream.Current.Text))
                 await _chatRoomService.BroadcastMessageAsync(requestStream.Current);
             } while (await requestStream.MoveNext());
 
-            _chatRoomService.Remove(context.Peer);
+            _chatRoomService.Remove(Guid.Parse(chatJoin.ChatRoomId), context.Peer);
         }
         private async Task JoinChatRoom(ChatRoomJoin request, IServerStreamWriter<Message> responseStream)
         {
