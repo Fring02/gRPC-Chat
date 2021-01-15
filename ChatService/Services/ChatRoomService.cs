@@ -29,7 +29,7 @@ namespace ChatService
                 if (!await _messages.HasUser(chatRoomId, userName))
                 {
                     _logger.LogInformation($"Creating entering message for user {userName} on chat room {chatRoom.Name}");
-                    await response.WriteAsync(new Message { Text = " has entered the chat!", User = userName });
+                    await response.WriteAsync(new Message { Text = " has entered the chat!", User = userName, ChatRoomId = chatRoom.Id });
                 }
                 else _messages.HistoryMessages(Guid.Parse(chatRoom.Id)).Result.ForEach(m => response.WriteAsync(m));
             }

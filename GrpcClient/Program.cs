@@ -20,16 +20,17 @@ namespace GrpcClient
             }
             using (var chat = client.JoinAndWriteMessage())
             {
+                Console.WriteLine("Enter id of chat room to join");
+                string preferredChatRoom = Console.ReadLine();
                 _ = Task.Run(async () =>
                 {
                     while (await chat.ResponseStream.MoveNext())
                     {
                         var response = chat.ResponseStream.Current;
+                        if(response.ChatRoomId.Equals(preferredChatRoom))
                         Console.WriteLine($"{response.User} : {response.Text}");
                     }
                 });
-                Console.WriteLine("Enter id of chat room to join");
-                var preferredChatRoom = Console.ReadLine();
                 if (!string.IsNullOrEmpty(preferredChatRoom))
                 {
                     Console.Clear();

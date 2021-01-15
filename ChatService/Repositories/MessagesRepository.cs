@@ -18,12 +18,12 @@ namespace ChatService.Repositories
         }
         public async Task<List<Message>> HistoryMessages()
         {
-                return await _context.Messages.Select(m => new Message { Text = m.Text, User = m.User }).ToListAsync();
+                return await _context.Messages.Select(m => new Message { Text = m.Text, User = m.User, ChatRoomId = m.ChatRoomId.ToString() }).ToListAsync();
         }
         public async Task<List<Message>> HistoryMessages(Guid chatRoomId)
         {
             return await _context.Messages.Where(m => m.ChatRoomId.Equals(chatRoomId)).
-                Select(m => new Message { Text = m.Text, User = m.User }).ToListAsync();
+                Select(m => new Message { Text = m.Text, User = m.User, ChatRoomId = m.ChatRoomId.ToString() }).ToListAsync();
         }
         public async Task<bool> AddMessage(MessageModel message)
         {
